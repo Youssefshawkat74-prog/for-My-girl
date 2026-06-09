@@ -1,0 +1,255 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>For Menna ❤️</title>
+
+<style>
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+    font-family:Arial,sans-serif;
+}
+
+body{
+    background:linear-gradient(135deg,#ff4d6d,#ff758f,#ff8fa3);
+    min-height:100vh;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    text-align:center;
+    color:white;
+    overflow:hidden;
+    padding:20px;
+}
+
+.container{max-width:700px;}
+
+.heart{
+    font-size:130px;
+    cursor:pointer;
+    animation:beat 1s infinite;
+}
+
+@keyframes beat{
+    0%,100%{transform:scale(1);}
+    50%{transform:scale(1.15);}
+}
+
+.content{display:none;}
+
+.message{
+    font-size:24px;
+    line-height:1.8;
+    margin:20px 0;
+    min-height:120px;
+}
+
+.counter{
+    font-size:22px;
+    margin:20px 0;
+    font-weight:bold;
+    line-height:2;
+}
+
+button{
+    border:none;
+    padding:12px 28px;
+    border-radius:12px;
+    font-size:18px;
+    cursor:pointer;
+    margin:10px;
+    color:white;
+}
+
+.yes{background:#2ecc71;}
+.no{background:#e74c3c; position:absolute;}
+
+.music-btn{
+    background:white;
+    color:#ff4d6d;
+    padding:12px 24px;
+    border-radius:12px;
+    cursor:pointer;
+    font-size:16px;
+}
+
+.floating-heart{
+    position:fixed;
+    bottom:-30px;
+    animation:floatUp 6s linear forwards;
+    pointer-events:none;
+}
+
+@keyframes floatUp{
+    from{transform:translateY(0);opacity:1;}
+    to{transform:translateY(-110vh);opacity:0;}
+}
+</style>
+</head>
+
+<body>
+
+<div class="container">
+
+<div id="heart" class="heart" onclick="heartSound()">❤️</div>
+
+<div id="content" class="content">
+
+    <button class="music-btn" onclick="playSong()">
+        🎵 يوم ما اتقابلنا
+    </button>
+
+    <div id="message" class="message"></div>
+
+    <div style="font-size:20px;">10/4/2026 Until Now</div>
+
+    <div id="counter" class="counter"></div>
+
+    <h2>?Wanna be my girl 💕</h2>
+
+    <button class="yes" onclick="sayYes()">YES</button>
+    <button class="no" id="noBtn">NO</button>
+
+</div>
+
+</div>
+
+<!-- 🔊 أصوات -->
+<audio id="yesSound">
+<source src="https://actions.google.com/sounds/v1/cartoon/pop.ogg" type="audio/ogg">
+</audio>
+
+<audio id="heartSound">
+<source src="https://actions.google.com/sounds/v1/impacts/wood_plank_flicks.ogg" type="audio/ogg">
+</audio>
+
+<script>
+
+document.getElementById("heart").onclick = () => {
+    document.getElementById("heart").style.display = "none";
+    document.getElementById("content").style.display = "block";
+    typeMessage();
+};
+
+// 🎵 YouTube
+function playSong(){
+    location.href = "https://youtu.be/iMZ1skkbUWI?si=hdfkz4xbK3qVd0c5";
+}
+
+// 💖 typing effect
+const text = `بحبك أوي يا منة ❤️
+يا أجمل وأحلى وأغلى بنوتة
+يا أحلى ما ليا
+يا مراتي وبنتي وحبيبتي
+كل شهر وانتي معايا 💖`;
+
+function typeMessage(){
+    let i=0;
+    const el=document.getElementById("message");
+    el.innerHTML="";
+    function type(){
+        if(i<text.length){
+            el.innerHTML+=text[i++];
+            setTimeout(type,45);
+        }
+    }
+    type();
+}
+
+// ⏱ counter
+function updateCounter(){
+    const startDate = new Date("2026-04-10T00:00:00");
+    const now = new Date();
+
+    let diff = Math.abs(now - startDate);
+
+    const seconds = Math.floor(diff / 1000);
+    const days = Math.floor(seconds / 86400);
+    const hours = Math.floor((seconds % 86400) / 3600);
+    const mins = Math.floor((seconds % 3600) / 60);
+    const secs = seconds % 60;
+
+    document.getElementById("counter").innerHTML =
+    `❤️ ${days} Days<br>⏰ ${hours} Hours<br>⏳ ${mins} Minutes<br>💖 ${secs} Seconds ❤️`;
+}
+
+setInterval(updateCounter,1000);
+updateCounter();
+
+// 💖 floating hearts
+setInterval(()=>{
+    const h=document.createElement("div");
+    h.className="floating-heart";
+    h.innerHTML="💖";
+    h.style.left=Math.random()*100+"vw";
+    h.style.fontSize=(15+Math.random()*25)+"px";
+    document.body.appendChild(h);
+    setTimeout(()=>h.remove(),6000);
+},300);
+
+// NO button escape
+const noBtn=document.getElementById("noBtn");
+
+noBtn.addEventListener("click",()=>{
+    noBtn.style.left=Math.random()*(window.innerWidth-100)+"px";
+    noBtn.style.top=Math.random()*(window.innerHeight-50)+"px";
+});
+
+// 🔊 YES sound + hearts + vibration
+function sayYes(){
+
+    const sound = document.getElementById("yesSound");
+    sound.currentTime = 0;
+    sound.play();
+
+    // vibration (mobile)
+    if(navigator.vibrate){
+        navigator.vibrate([200,100,200]);
+    }
+
+    for(let i=0;i<100;i++){
+        setTimeout(()=>{
+            const h=document.createElement("div");
+            h.className="floating-heart";
+            h.innerHTML="💖";
+            h.style.left=Math.random()*100+"vw";
+            h.style.fontSize=(10+Math.random()*30)+"px";
+            document.body.appendChild(h);
+            setTimeout(()=>h.remove(),4000);
+        },i*15);
+    }
+
+    setTimeout(()=>{
+        document.body.innerHTML=`
+        <div style="
+        height:100vh;
+        display:flex;
+        justify-content:center;
+        align-items:center;
+        flex-direction:column;
+        background:linear-gradient(135deg,#ff4d6d,#ff758f,#ff8fa3);
+        color:white;
+        text-align:center;">
+        
+        <h1 style="font-size:80px;">💖</h1>
+        <h2 style="font-size:30px;">وأنا كمان عايزك ليا وبحبك وليكي انتي بس ❤️</h2>
+        <h1>I Love You My little Princess 💕</h1>
+
+        </div>`;
+    },2000);
+}
+
+// 💖 heart sound
+function heartSound(){
+    const s = document.getElementById("heartSound");
+    s.currentTime = 0;
+    s.play();
+}
+
+</script>
+
+</body>
+</html>
